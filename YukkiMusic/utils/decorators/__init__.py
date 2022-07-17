@@ -9,3 +9,4 @@
 
 from .admins import *
 from .language import *
+from .filters import command
