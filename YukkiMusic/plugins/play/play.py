@@ -27,6 +27,7 @@ from YukkiMusic.utils.channelplay import get_channeplayCB
 from YukkiMusic.utils.database import is_video_allowed
 from YukkiMusic.utils.decorators.language import languageCB
 from YukkiMusic.utils.decorators.play import PlayWrapper
+from YukkiMusic.utils.decorators import command
 from YukkiMusic.utils.formatters import formats
 from YukkiMusic.utils.inline.play import (livestream_markup,
                                           playlist_markup,
@@ -40,9 +41,8 @@ PLAY_COMMAND = get_command("PLAY_COMMAND")
 
 
 @app.on_message(
-    filters.command(PLAY_COMMAND)
+    command(PLAY_COMMAND)
     & filters.group
-    & ~filters.edited
     & ~BANNED_USERS
 )
 @PlayWrapper
@@ -338,7 +338,7 @@ async def play_commnd(
                 await Yukki.stream_call(url)
             except NoActiveGroupCall:
                 await mystic.edit_text(
-                    "There's an issue with the bot. Please report it to my owner and ask them to check logger group."
+                    "Please turn on your voice chat first."
                 )
                 return await app.send_message(
                     config.LOG_GROUP_ID,
